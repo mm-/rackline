@@ -1,10 +1,8 @@
-= rackline - DESCRIBE YOUR GEM
+= rackline - CLI Rackspace Cloud Client
 
-Author::  YOUR NAME (YOUR EMAIL)
-Copyright:: Copyright (c) 2012 YOUR NAME
+Author::  MasenMarshall
+Copyright:: masen@sutoroot.com (c) 2012 Masen Marshall
 
-
-DESCRIBE YOUR GEM HERE
 
 == Links
 

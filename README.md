@@ -1,6 +1,6 @@
 # Rackline
 
-TODO: Write a gem description
+Gem for interacting with the Rackspace Cloud via command line
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+rackline --help
 
 ## Contributing
 
