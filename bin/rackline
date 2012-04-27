@@ -12,13 +12,11 @@ class App
 
   main do |server_name|
     
+    # Make sure the user specifies a username and api_key
     if options[:username].nil? || options[:api_key].nil?
-      puts "You must specify a username and api_key!"
-      puts "rackline --username stuff --api_key 3223dsdfsdc223lkc2lk22l myservername"
-      puts
-      exit
+      help_now!("You must specify a username and api_key
+                 with --username and --api_key ")
     end
-
     un = options[:username]
     ak = options[:api_key]
 
@@ -27,7 +25,13 @@ class App
 
     # Find our server!
     object = ServerFind.new(server_name)
-    object.byname 
+    
+    if options[:id_only]
+      object.byname_idonly
+    else 
+      object.byname 
+    end
+
   end
 
   version Rackline::VERSION
@@ -38,6 +42,8 @@ class App
 
   on("--username un", "Connect with specified username")
   on("--api_key ak", "Connect with specified api_key")
+  on("--id_only", "Return only the ID associated with server_name")
+
   
 
   use_log_level_option
