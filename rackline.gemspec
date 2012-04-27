@@ -4,8 +4,8 @@ require File.expand_path('../lib/rackline/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["MM"]
   gem.email         = ["masen@sutoroot.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{rackline}
+  gem.summary       = %q{rackline}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
@@ -18,4 +18,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('aruba')
   gem.add_development_dependency('rake','~> 0.9.2')
   gem.add_dependency('methadone', '~>1.0.0.rc4')
+  gem.add_dependency('cloudservers')
 end
