@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'methadone'
+require 'rackline'
+require 'cloudservers'
+
+class App
+  include Methadone::Main
+  include Methadone::CLILogging
+  include Rackline
+
+  main do |tag|
+    $cs = CloudServers::Connection.new(:username => "#{id}" , :api_key => "#{ak}")
+    object = ServerFind.new(tag)
+    object.byname 
+  end
+
+  version Rackline::VERSION
+
+  description 'Finds cloudserver by tag name'
+
+  arg :tag, "Tag to search for"
+
+  
+
+  use_log_level_option
+
+  go!
+end
