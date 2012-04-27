@@ -10,18 +10,23 @@ class App
   include Methadone::CLILogging
   include Rackline
 
-  main do |tag|
-    $cs = CloudServers::Connection.new(:username => "#{id}" , :api_key => "#{ak}")
-    object = ServerFind.new(tag)
+  main do |server_name|
+    un = options[:username]
+    ak = options[:api_key]
+    
+    $cs = CloudServers::Connection.new(:username => "#{un}" , :api_key => "#{ak}")
+    object = ServerFind.new(server_name)
     object.byname 
   end
 
   version Rackline::VERSION
 
-  description 'Finds cloudserver by tag name'
+  description 'Finds cloudserver by server name'
 
-  arg :tag, "Tag to search for"
+  arg :server_name, "Server name to search for"
 
+  on("--username un", "Connect with specified username")
+  on("--api_key ak", "Connect with specified api_key")
   
 
   use_log_level_option
