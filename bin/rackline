@@ -11,10 +11,21 @@ class App
   include Rackline
 
   main do |server_name|
+    
+    if options[:username].nil? || options[:api_key].nil?
+      puts "You must specify a username and api_key!"
+      puts "rackline --username stuff --api_key 3223dsdfsdc223lkc2lk22l myservername"
+      puts
+      exit
+    end
+
     un = options[:username]
     ak = options[:api_key]
-    
+
+    # Connect to rackspace cloud
     $cs = CloudServers::Connection.new(:username => "#{un}" , :api_key => "#{ak}")
+
+    # Find our server!
     object = ServerFind.new(server_name)
     object.byname 
   end
