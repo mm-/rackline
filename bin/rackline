@@ -4,6 +4,7 @@ require 'optparse'
 require 'methadone'
 require 'rackline'
 require 'cloudservers'
+require 'parseconfig'
 
 class App
   include Methadone::Main
@@ -11,14 +12,70 @@ class App
   include Rackline
 
   main do |server_name|
-    
+       
+=begin 
+Get our username and api key either from the config
+file or from the command line
+config_file = ParseConfig.new(ENV['HOME']+"/.rackline")
+
+if the file exists
+=end
+
+=begin
+if !options[:username].nil? && !options[:api_key].nil? 
+  exit_now!("20")
+elsif options[:username].nil? || options[:api_key].nil?
+  exit_now!("30")
+end]
+=end
+
+rackline_config = ENV['HOME']+"/.rackline"
+
+if !options[:username].nil? && !options[:api_key].nil?
+  un = options[:username]
+  ak = options[:api_key]
+  exit_now!("10")
+  unless File.exists?(rackline_config)
+    config_file = ParseConfig.new(rackline_config)
+    un = config_file.get_value('username')
+    ak = config_file.get_value('api_key')
+    puts ak
+    puts un
+    unless ak.empty? && un.empty?
+      help_now!("Config file ~/.rackline read but either username or api_key
+                  was empty. Please fix config or use --username
+                  and --api_key to specify them on the command line")
+    end
+  end
+end
+=begin
+else
+  File.open(rackline_config, 'w') do |f|  
+    f.puts "username = \napi_key = "
+    help_now!("You must either specify a username and api_key
+                  with --username and --api_key or enter use the config
+                  file in ~/.rackline")       
+  end
+=end
+ 
+#end 
+
+
+
+
+
+
     # Make sure the user specifies a username and api_key
+=begin
     if options[:username].nil? || options[:api_key].nil?
       help_now!("You must specify a username and api_key
                  with --username and --api_key ")
     end
     un = options[:username]
     ak = options[:api_key]
+=end
+
+
 
     # Connect to rackspace cloud
     $cs = CloudServers::Connection.new(:username => "#{un}" , :api_key => "#{ak}")
