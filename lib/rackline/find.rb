@@ -46,6 +46,18 @@ module Rackline
         printf "%-20s %s\n", "Image ID", image_id 
         printf "%-20s %s\n", "Public IP", pub_ip
         printf "%-20s %s\n", "Private IP", priv_ip
+        ts=$cs.server(id)
+        backups = ts.backup_schedule
+        if backups[:enabled]
+          daily = backups[:daily]
+          weekly = backups[:weekly]
+          printf "%-20s %s\n", "Backups", "Enabled"
+          printf "%-20s %s\n", "Schedule:", "vvvvvv"
+          printf "%-20s %s\n", "Daily", daily
+          printf "%-20s %s\n", "Weekly", weekly          
+        else
+          printf "%-20s %s\n", "Backups", "Disabled"
+        end
       end
     end
   end
