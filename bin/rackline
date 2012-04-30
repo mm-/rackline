@@ -11,10 +11,10 @@ class App
   include Methadone::CLILogging
   include Rackline
 
-
-  # Main authentication block
-  # 
   main do |server_name|
+
+    # Main authentication block
+
     rackline_config = ENV['HOME']+"/.rackline"
     if !options[:username].nil? && !options[:api_key].nil?
       un = options[:username]
@@ -30,33 +30,34 @@ class App
       end
     end
 
-    # Connect to rackspace cloud
+    #### Connect
     $cs = CloudServers::Connection.new(:username => "#{un}" , :api_key => "#{ak}")
+    #### Connect
 
-    # Find our server!
+
+    # Search block
     server = ServerFind.new(server_name)
-    
-    if options[:id_only]
+
+
+    if options[:namesearch] == "id" 
       server.byname_idonly
-    elsif options[:full_info]
+    elsif options[:namesearch] == "full" 
       server.byname_fullinfo
-    else
+    elsif options[:namesearch] == "base"
       server.byname 
     end
 
   end
 
+
   version Rackline::VERSION
 
-  description 'Finds cloudserver by server name'
-
-  arg :server_name, "Server name to search for"
-
+  description 'CLI control of Rackspace Cloud servers'
+  arg :server_name, "Server name or ID"
   on("--username un", "Connect with specified username")
   on("--api_key ak", "Connect with specified api_key")
-  on("--id_only", "Return only the ID associated with server_name")
-  on("--full_info", "Return full info about each sever found")
-  
+  on("--namesearch level", "-s level", "Search cloudservers by name. Output Levels: base, id_only, or full_info") 
+
 
   use_log_level_option
 
