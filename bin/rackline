@@ -36,27 +36,47 @@ class App
 
 
     # Search block
-    server = ServerFind.new(server_name)
 
+    if options[:namesearch]
+      server = ServerFind.new(server_name)
 
-    if options[:namesearch] == "id" 
-      server.byname_idonly
-    elsif options[:namesearch] == "full" 
-      server.byname_fullinfo
-    elsif options[:namesearch] == "base"
-      server.byname 
+      if options[:namesearch] == "id" 
+        server.byname_idonly
+      elsif options[:namesearch] == "full" 
+        server.byname_fullinfo
+      elsif options[:namesearch] == "base"
+        server.byname 
+      else
+        help_now!("--namesearch requires an info level, id, full or base")
+      end
     end
 
+    if options[:reboot]
+      server = $cs.server(server_name)
+      
+      if options[:reboot] == "hard"
+        server.reboot!
+      elsif options[:reboot] == "soft"
+        server.reboot
+      else
+        help_now!("--reboot requires a reboot type, either hard or soft")
+      end
+    end
+
+
   end
+
 
 
   version Rackline::VERSION
 
   description 'CLI control of Rackspace Cloud servers'
   arg :server_name, "Server name or ID"
+
   on("--username un", "Connect with specified username")
   on("--api_key ak", "Connect with specified api_key")
-  on("--namesearch level", "-s level", "Search cloudservers by name. Output Levels: base, id_only, or full_info") 
+  on("--namesearch level", "-n level", "Search cloudservers by name. Output Levels: base, id_only, or full_info") 
+  on("--reboot type", "-r type", "Reboots specified server ID. Reboot Types: hard, soft")
 
 
   use_log_level_option
