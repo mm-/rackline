@@ -24,12 +24,14 @@ class App
     $cs = CloudServers::Connection.new(:username => "#{un}" , :api_key => "#{ak}")
 
     # Find our server!
-    object = ServerFind.new(server_name)
+    server = ServerFind.new(server_name)
     
     if options[:id_only]
-      object.byname_idonly
-    else 
-      object.byname 
+      server.byname_idonly
+    elsif options[:full_info]
+      server.byname_fullinfo
+   else
+      server.byname 
     end
 
   end
@@ -43,7 +45,7 @@ class App
   on("--username un", "Connect with specified username")
   on("--api_key ak", "Connect with specified api_key")
   on("--id_only", "Return only the ID associated with server_name")
-
+  on("--full_info", "Return full info about each sever found")
   
 
   use_log_level_option
