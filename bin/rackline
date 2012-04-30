@@ -63,6 +63,13 @@ class App
       end
     end
 
+    if options[:passwd]
+      server = $cs.server(server_name)
+      new_password = options[:passwd].to_s
+      puts new_password
+      server.update(:adminPass => new_password)
+    end
+      
 
   end
 
@@ -77,6 +84,7 @@ class App
   on("--api_key ak", "Connect with specified api_key")
   on("--namesearch level", "-n level", "Search cloudservers by name. Output Levels: base, id_only, or full_info") 
   on("--reboot type", "-r type", "Reboots specified server ID. Reboot Types: hard, soft")
+  on("--passwd new_password", "-p new_password", "Changes root password for specified ID")
 
 
   use_log_level_option
