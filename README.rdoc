@@ -5,11 +5,15 @@ Copyright:: masen@sutoroot.com (c) 2012 Masen Marshall
 
 
 == Links
-
-* {Source on Github}[LINK TO GITHUB]
-* RDoc[LINK TO RDOC.INFO]
+https://github.com/3meritus/rackline/
 
 == Install
+
+bundle install
+
+gem build rackline.gemspec
+
+gem install rackline-0.0.1
 
 == Examples
 
@@ -31,6 +35,4 @@ Arguments:
         Server name or ID
 
 
-
-== Contributing
 
