@@ -86,8 +86,38 @@ class App
     end
     ###
 
-  end
+    ### --list block
+    if options[:list]
+      arg = server_name
+      if arg == "images"
+        cs = $cs
+        printf "%-60s %s\n\n", "Name", "ID"
+        sorted_array = cs.list_images.each.sort_by { |hash| hash[:name] }
+        sorted_array.each do |image|
+          name = image[:name].to_s
+          id = image[:id].to_s
+          status = image[:status].to_s
+          printf "%-60s %s\n", name, id
+        end       
+      elsif arg == "flavors"
+        cs = $cs
+        sorted_arry = cs.list_flavors.each.sort_by { |hash| hash[:id] }
+        printf "%-15s %-4s %-6s %s\n\n", "Name", "ID", "RAM", "Disk"
+        sorted_arry.each do |flavor|
+          name = flavor[:name].to_s
+          id = flavor[:id].to_s
+          ram = flavor[:ram].to_s
+          disk = flavor[:disk].to_s
+          printf "%-15s %-4s %-6s %s\n", name, id, ram, disk
+       end
+      elsif arg == "servers"
+        help_now!("--list servers not implemented yet, please use --namesearch")
+      else
+        help_now!("You must specify either images, flavors, or servers to --list")
+      end
+    end
 
+  end
 
 
   version Rackline::VERSION
@@ -104,14 +134,7 @@ class App
   on("--create", "Creates a new server, requires --imageid and --flavorid")
   on("--imageid image_id", "Sets the Image ID of a new server to be created, used with --create")
   on("--flavorid flavor_id", "Sets the Flavor ID of a new server to be created, used with --create")
-
-
-
-
-
-
-#  on("--backups weekly daily", "Enables backups and sets schedule")
-  
+  on("--list", "Lists all images, flavors, or servers, specify with --list-all images/servers/flavors")
 
 
 
