@@ -100,8 +100,20 @@ class App
   on("--namesearch level", "-n level", "Search cloudservers by name. Output Levels: base, id_only, or full_info") 
   on("--reboot type", "-r type", "Reboots specified server ID. Reboot Types: hard, soft")
   on("--passwd new_password", "-p new_password", "Changes root password for specified ID")
-  on("--changename new_name", "-c new_name", "Changes the server name (not the hostname!) for the specified ID") 
+  on("--changename new_name", "Changes the server name (not the hostname!) for the specified ID") 
+  on("--create", "Creates a new server, requires --imageid and --flavorid")
+  on("--imageid image_id", "Sets the Image ID of a new server to be created, used with --create")
+  on("--flavorid flavor_id", "Sets the Flavor ID of a new server to be created, used with --create")
+
+
+
+
+
+
 #  on("--backups weekly daily", "Enables backups and sets schedule")
+  
+
+
 
   use_log_level_option
 
