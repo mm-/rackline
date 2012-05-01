@@ -5,6 +5,7 @@ require 'methadone'
 require 'rackline'
 require 'cloudservers'
 require 'parseconfig'
+require 'powerbar'
 
 class App
   include Methadone::Main
@@ -116,6 +117,37 @@ class App
         help_now!("You must specify either images, flavors, or servers to --list")
       end
     end
+    ###
+
+    ### --create block
+    if options[:create]
+      if !options[:imageid].nil? && !options[:flavorid].nil?
+        cs = $cs
+        flavor_id = options[:flavorid]
+        image_id = options[:imageid]
+        image = cs.get_image(image_id)
+        flavor = cs.get_flavor(flavor_id)
+
+        puts "\nBuilding new server - " + server_name 
+        puts "With Image - " + image.name
+        puts "And flavor - " + flavor.name 
+        puts
+        
+        newserver = cs.create_server(:name => server_name, :imageId => image.id, :flavorId => flavor.id)
+
+        progress = newserver.progress
+        
+        puts "Building...Building...Building"
+        
+
+        adminpass = newserver.adminPass
+
+
+      else
+       help_now!( "You must specify an --imageid and --flavorid with --create")
+      end
+    end
+
 
   end
 
