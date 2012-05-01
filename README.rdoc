@@ -15,6 +15,17 @@ gem build rackline.gemspec
 
 gem install rackline-0.0.1
 
+== Config
+
+A config is expected as ~/.rackline if the --username and --api_key options aren't present in the command.
+
+The format is -
+
+username = MyUserName
+api_key = MyApiKey
+
+
+
 == Examples
 
 Options:
