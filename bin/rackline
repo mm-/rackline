@@ -35,7 +35,7 @@ class App
     #### Connect
 
 
-    # Search block
+    ### --namesearch block
 
     if options[:namesearch]
       server = ServerFind.new(server_name)
@@ -50,6 +50,10 @@ class App
         help_now!("--namesearch requires an info level, id, full or base")
       end
     end
+    ###   
+
+
+    ### --reboot block
 
     if options[:reboot]
       server = $cs.server(server_name)
@@ -62,20 +66,25 @@ class App
         help_now!("--reboot requires a reboot type, either hard or soft")
       end
     end
+    ###
+
+    ### --passwd block
 
     if options[:passwd]
       server = $cs.server(server_name)
       new_password = options[:passwd].to_s
       server.update(:adminPass => new_password)
     end
+    ###
       
+    ### --changename block
 
     if options[:changename]
       server = $cs.server(server_name)
       new_name = options[:changename]
       server.update(:name => new_name)
     end
-
+    ###
 
   end
 
@@ -92,6 +101,7 @@ class App
   on("--reboot type", "-r type", "Reboots specified server ID. Reboot Types: hard, soft")
   on("--passwd new_password", "-p new_password", "Changes root password for specified ID")
   on("--changename new_name", "-c new_name", "Changes the server name (not the hostname!) for the specified ID") 
+#  on("--backups weekly daily", "Enables backups and sets schedule")
 
   use_log_level_option
 
