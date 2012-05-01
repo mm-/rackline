@@ -135,19 +135,31 @@ class App
         
         newserver = cs.create_server(:name => server_name, :imageId => image.id, :flavorId => flavor.id)
 
+        ## ProgressBar stuff
         progress = newserver.progress
-        
-        puts "Building...Building...Building"
-        
+        p = PowerBar.new
+        p.settings.tty.finite.template.barchar = '*'
+        p.settings.tty.finite.template.padchar = '.'
+        total = 100
+
+        until progress == 100 do 
+          newserver.refresh
+          progress = newserver.progress
+          p.show(:msg => 'Building', :done => progress, :total => total)
+          sleep 2
+        end
+
+        p.close
+        ##
 
         adminpass = newserver.adminPass
-
-
+        puts "\nAdmin Pass - " + adminpass
+        puts
       else
        help_now!( "You must specify an --imageid and --flavorid with --create")
       end
     end
-
+    ###
 
   end
 

@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('methadone', '~>1.0.0.rc4')
   gem.add_dependency('cloudservers')
   gem.add_dependency('parseconfig')
+  gem.add_dependency('powerbar')
 end
